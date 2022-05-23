@@ -16,9 +16,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var diagonalContainer = mutableListOf(0, 0, 0)
     private var opoDiagonalContainer = mutableListOf(0, 0, 0)
 
+    private var mPlayer0Win = 0
+    private var mPlayer1Win = 0
 
     val mapStatus: MutableLiveData<MutableMap<Int, Int>> by lazy {
         MutableLiveData<MutableMap<Int, Int>>()
+    }
+
+    val resultText: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
     }
 
     fun getNewMap() {
@@ -33,11 +39,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             8 to 0,
             9 to 0,
         )
-//        Log.d("TEST TIC TAC", map[5].toString())
+
         mMoveCount = 0
         rowsContainer = mutableListOf(0, 0, 0)
         columnsContainer = mutableListOf(0, 0, 0)
         mapStatus.postValue(map)
+
+        val result = "Player 1: $mPlayer0Win \nPlayer 2: $mPlayer1Win"
+        resultText.postValue(result)
     }
 
     fun onClick(tag: Int) {
@@ -110,6 +119,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun endGame(state: GameState) {
         Log.d("TICTAC", "STATE GAME : $state")
+
+        if (state == GameState.PLAYER_0_WIN)
+            mPlayer0Win++
+        else if (state == GameState.PLAYER_1_WIN)
+            mPlayer1Win++
+
+        getNewMap()
     }
 
     fun nextPlayer() {

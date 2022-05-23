@@ -3,6 +3,8 @@ package com.cchameyr.tictactoe.views
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
+import android.widget.TextClock
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.cchameyr.tictactoe.R
@@ -13,6 +15,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mViewModel: MainViewModel
 
     lateinit var mCellMap: MutableMap<Int, View>
+
+    lateinit var mResults: TextView
+    lateinit var mClock: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,9 @@ class MainActivity : AppCompatActivity() {
         mCellMap[7] = findViewById(R.id.cell_7)
         mCellMap[8] = findViewById(R.id.cell_8)
         mCellMap[9] = findViewById(R.id.cell_9)
+
+        mResults = findViewById(R.id.results)
+        mClock = findViewById(R.id.clock)
     }
 
     private fun initView() {
@@ -77,6 +85,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        mViewModel.resultText.observe(this) {
+            mResults.text = it
         }
     }
 }
