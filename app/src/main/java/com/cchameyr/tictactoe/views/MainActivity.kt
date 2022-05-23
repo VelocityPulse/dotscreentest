@@ -58,13 +58,13 @@ class MainActivity : AppCompatActivity() {
     private fun initObserver() {
         mViewModel.mapStatus.observe(this) {
             for (i in 1..9) {
-                if (it[i] == -1) {
+                if (it[i] == 0) {
                     mCellMap[i]!!.apply {
                         findViewById<View>(R.id.cross).visibility = GONE
                         findViewById<View>(R.id.circle).visibility = GONE
                     }
                 }
-                if (it[i] == 0) {
+                if (it[i] == -1) {
                     mCellMap[i]!!.apply {
                         findViewById<View>(R.id.cross).visibility = VISIBLE
                         findViewById<View>(R.id.circle).visibility = GONE
